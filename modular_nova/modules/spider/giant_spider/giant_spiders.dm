@@ -69,21 +69,21 @@
 
 /**
  * ### Pit Spider
- * A behemoth of a spider, doing both high damage but mid-level health. Front line commander.
+ * A behemoth of a spider, doing both high damage. Front line commander.
  */
 /mob/living/basic/spider/giant/pit
-	name = "pit spider"
+	name = "Terror"
 	desc = "Furry and brown with an orange top, its massive jaws strike fear in you and also sometimes into walls. This one has bright orange eyes."
 	icon = 'modular_nova/modules/spider/icons/spider.dmi'
 	icon_state = "pit"
 	icon_living = "pit"
 	icon_dead = "pit_dead"
 	gender = MALE
-	maxHealth = 250
-	health = 250
-	armour_penetration = 25
-	melee_damage_lower = 5
-	melee_damage_upper = 15
+	maxHealth = 800
+	health = 800
+	armour_penetration = 40
+	melee_damage_lower = 40
+	melee_damage_upper = 40
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 25
 	maximum_survivable_temperature = 1100
@@ -91,10 +91,10 @@
 	wound_bonus = 25
 	bare_wound_bonus = 50
 	sharpness = SHARP_EDGED
-	obj_damage = 60
+	obj_damage = 150
 	web_speed = 0.25
 	limb_destroyer = 50
-	speed = 5
+	speed = 6
 	player_speed_modifier = -4
 	gold_core_spawnable = NO_SPAWN
 	sight = SEE_TURFS
@@ -111,6 +111,13 @@
 
 	AddElement(/datum/element/wall_tearer)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/below_average_web)
+
+/mob/living/basic/spider/giant/pit/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
+	. = ..()
+	if (!. || !isliving(target))
+		return
+	target.AdjustKnockdown(1.5 SECONDS)
+	target.adjustStaminaLoss(10)
 
 /**
  * ### Ogre Spider
